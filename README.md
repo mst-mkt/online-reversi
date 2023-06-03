@@ -1,4 +1,4 @@
-# |Project Name|
+# online-reversi
 
 フロントエンドは src ディレクトリの [Next.js](https://nextjs.org/) 、バックエンドは server ディレクトリの [frourio](https://frourio.com/) で構築された TypeScript で一気通貫開発が可能なモノレポサービス
 
@@ -25,14 +25,14 @@ $ npm i --prefix server
 
 ### 環境変数ファイルの作成
 
-.env ファイルを 4 つ作成する  
+.env ファイルを 4 つ作成する
 prisma 用の.env には自分で起動した PostgreSQL の設定を書く
 
 ```sh
 $ cp .env.example .env
 $ cp server/.env.example server/.env
 $ cp docker/dev/.env.example docker/dev/.env
-$ echo "API_DATABASE_URL=postgresql://root:root@localhost:5432/|Project Name|" >> server/prisma/.env
+$ echo "API_DATABASE_URL=postgresql://root:root@localhost:5432/online-reversi" >> server/prisma/.env
 ```
 
 ### ミドルウェアのセットアップ
