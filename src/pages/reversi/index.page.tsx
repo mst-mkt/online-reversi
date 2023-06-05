@@ -11,19 +11,33 @@ const Home = () => {
   const [user] = useAtom(userAtom);
 
   const [board, setBoard] = useState<number[][]>();
+  const [turn, setTurn] = useState<number>();
 
   const fetchBoard = async () => {
     const board = await apiClient.board.$get().catch(returnNull);
     if (board !== null) setBoard(board.board);
   };
 
+  const fetchTurn = async () => {
+    const turn = await apiClient.turn.$get();
+    setTurn(turn);
+  };
+
   const clickCell = async (x: number, y: number) => {
     await apiClient.board.post({ body: { x, y } });
     await fetchBoard();
+    await fetchTurn();
+  };
+
+  const countCell = (color: number) => {
+    return board?.flat().filter((v) => v === color).length;
   };
 
   useEffect(() => {
-    const cancelId = setInterval(fetchBoard, 500);
+    const cancelId = setInterval(() => {
+      fetchBoard();
+      fetchTurn();
+    }, 100);
     return () => {
       clearInterval(cancelId);
     };
@@ -56,35 +70,21 @@ const Home = () => {
               <h1>Reversi</h1>
               <p>Created at INIAD Developers</p>
             </div>
-            <button className={styles.header__button}>
-              <svg
-                strokeWidth="2"
-                stroke="currentColor"
-                fill="none"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              >
-                <path stroke="none" d="M0 0h24v24H0z" fill="none" />
-                <path d="M19.933 13.041a8 8 0 1 1 -9.925 -8.788c3.899 -1 7.935 1.007 9.425 4.747" />
-                <path d="M20 4v5h-5" />
-                about:blank#blocked{' '}
-              </svg>
-            </button>
           </header>
           <div className={styles.status}>
             <div className={styles.status__content}>
               <h2>TURN</h2>
-              <p>のターン</p>
+              <p>{turn === 1 ? '黒' : '白'}のターン</p>
             </div>
             <div className={styles.status__content}>
               <h2>COUNT</h2>
               <div>
                 <div className={`${styles['count__disc--black']} ${styles.count__disc}`} />
-                <span />
+                <span>{countCell(1)}</span>
               </div>
               <div>
                 <div className={`${styles['count__disc--white']} ${styles.count__disc}`} />
-                <span />
+                <span>{countCell(2)}</span>
               </div>
             </div>
             <div className={styles.status__content}>
