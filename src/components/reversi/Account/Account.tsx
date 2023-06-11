@@ -20,7 +20,7 @@ export const Account = ({ user }: { user: UserModel }) => {
       <button onClick={onLogout} className={styles.button}>
         ログアウト
       </button>
-      <button onClick={() => {}} className={styles.button}>
+      <button onClick={() => console.log()} className={styles.button}>
         ゲームをやめる
       </button>
     </>

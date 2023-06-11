@@ -20,9 +20,6 @@ declare const styles:
   & Readonly<{ "status": string }>
   & Readonly<{ "status": string }>
   & Readonly<{ "header": string }>
-  & Readonly<{ "header": string }>
-  & Readonly<{ "header__title": string }>
-  & Readonly<{ "header__title": string }>
   & Readonly<{ "status__content": string }>
   & Readonly<{ "status__content": string }>
   & Readonly<{ "status__content": string }>

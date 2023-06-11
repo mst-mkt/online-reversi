@@ -1,10 +1,10 @@
 import { useAtom } from 'jotai';
 import { useEffect, useState } from 'react';
-import { ButtonIcon } from 'src/components/ButtonIcon/ButtonIcon';
 import { Loading } from 'src/components/Loading/Loading';
-import { MenuIcon } from 'src/components/icons/MenuIcon';
 import { Account } from 'src/components/reversi/Account/Account';
+import { Header } from 'src/components/reversi/Header/Header';
 import { Modal } from 'src/components/reversi/Modal/Modal';
+import { Status } from 'src/components/reversi/Status/Status';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
 import { userAtom } from '../../atoms/user';
@@ -72,22 +72,12 @@ const Home = () => {
               ))
             )}
           </div>
-          <header className={styles.header}>
-            <div className={styles.header__title}>
-              <h1>Reversi</h1>
-              <p>Created at INIAD Developers</p>
-            </div>
-            <ButtonIcon onclick={toggleModal}>
-              <MenuIcon size={24} fill="#555" />
-            </ButtonIcon>
-          </header>
+          <Header toggleModal={toggleModal} />
           <div className={styles.status}>
-            <div className={styles.status__content}>
-              <h2>TURN</h2>
+            <Status title="TURN">
               <p>{turnColor === myColor ? 'あなた' : '相手'}のターン</p>
-            </div>
-            <div className={styles.status__content}>
-              <h2>COUNT</h2>
+            </Status>
+            <Status title="COUNT">
               <div>
                 <div className={`${styles['count__disc--black']} ${styles.count__disc}`} />
                 <span>{countCell(1)}</span>
@@ -96,15 +86,14 @@ const Home = () => {
                 <div className={`${styles['count__disc--white']} ${styles.count__disc}`} />
                 <span>{countCell(2)}</span>
               </div>
-            </div>
-            <div className={styles.status__content}>
-              <h2>SCORE</h2>
+            </Status>
+            <Status title="SCORE">
               <div className={styles.score}>
                 <div className={`${styles.score__disc} ${styles['score__disc--black']}`} />
                 <span className={styles.score__text} />
                 <div className={`${styles.score__disc} ${styles['score__disc--white']}`} />
               </div>
-            </div>
+            </Status>
           </div>
         </div>
       </div>

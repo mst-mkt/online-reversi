@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  &__title {
+    > h1 {
+      font-size: min(48px, 8vmin);
+      margin: 0;
+    }
+
+    > p {
+      display: inline-block;
+      margin: 0;
+      background-color: #000c;
+      color: #eee;
+      padding: min(2px, 1vmin) min(6px, 3vmin);
+      font-size: min(12px, 2vmin);
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      max-width: 64vmin;
+    }
+  }
+}

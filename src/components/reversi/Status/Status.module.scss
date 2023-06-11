@@ -1,0 +1,17 @@
+.status {
+  width: 100%;
+
+  > h2 {
+    font-size: min(12px, 2vmin);
+    margin: min(16px, 6vmin) 0 min(8px, 3vmin);
+    letter-spacing: 0.2em;
+    font-weight: 600;
+  }
+
+  &__title {
+    font-size: min(12px, 2vmin);
+    margin: min(16px, 6vmin) 0 min(8px, 3vmin);
+    letter-spacing: 0.2em;
+    font-weight: 600;
+  }
+}

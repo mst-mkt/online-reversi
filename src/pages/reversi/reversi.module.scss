@@ -105,31 +105,6 @@
   }
 }
 
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-
-  &__title {
-    > h1 {
-      font-size: min(48px, 8vmin);
-      margin: 0;
-    }
-
-    > p {
-      display: inline-block;
-      margin: 0;
-      background-color: #000c;
-      color: #eee;
-      padding: min(2px, 1vmin) min(6px, 3vmin);
-      font-size: min(12px, 2vmin);
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      max-width: 64vmin;
-    }
-  }
-}
-
 .status {
   display: flex;
 
@@ -137,55 +112,13 @@
     order: 2;
   }
 
-  &__content {
-    width: 100%;
-
-    > h2 {
-      font-size: min(12px, 2vmin);
-      margin: min(16px, 6vmin) 0 min(8px, 3vmin);
-      letter-spacing: 0.2em;
-      font-weight: 600;
-    }
-
-    > p {
-      font-size: min(24px, 2vmin);
-      margin: min(6px, 4vmin) 0;
-      line-height: min(36px, 6vmin);
-    }
-  }
-}
-
-.count__disc {
-  display: inline-block;
-  width: min(16px, 3vmin);
-  height: min(16px, 3vmin);
-  border-radius: 50%;
-  vertical-align: middle;
-  margin-right: min(24px, 2vmin);
-
-  &--black {
-    background-color: #444;
-  }
-
-  &--white {
-    background-color: #fff;
-    border: solid 1px #444;
-  }
-
-  + span {
-    font-size: 0.8em;
-  }
-}
-
-.score {
-  margin-top: min(8px, 2vmin);
-
-  &__disc {
+  .count__disc {
     display: inline-block;
-    width: min(24px, 4vmin);
-    height: min(24px, 4vmin);
-    border-radius: 0.8em;
+    width: min(16px, 3vmin);
+    height: min(16px, 3vmin);
+    border-radius: 50%;
     vertical-align: middle;
+    margin-right: min(24px, 2vmin);
 
     &--black {
       background-color: #444;
@@ -195,13 +128,38 @@
       background-color: #fff;
       border: solid 1px #444;
     }
+
+    + span {
+      font-size: 0.8em;
+    }
   }
 
-  &__text {
-    font-size: min(20px, 3.6vmin);
-    display: inline-block;
-    margin: 0 min(12px, 3vmin);
-    vertical-align: middle;
+  .score {
+    margin-top: min(8px, 2vmin);
+
+    &__disc {
+      display: inline-block;
+      width: min(24px, 4vmin);
+      height: min(24px, 4vmin);
+      border-radius: 0.8em;
+      vertical-align: middle;
+
+      &--black {
+        background-color: #444;
+      }
+
+      &--white {
+        background-color: #fff;
+        border: solid 1px #444;
+      }
+    }
+
+    &__text {
+      font-size: min(20px, 3.6vmin);
+      display: inline-block;
+      margin: 0 min(12px, 3vmin);
+      vertical-align: middle;
+    }
   }
 }
 
