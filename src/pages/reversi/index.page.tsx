@@ -15,18 +15,13 @@ const Home = () => {
 
   const fetchBoard = async () => {
     const board = await apiClient.board.$get().catch(returnNull);
-    if (board !== null) setBoard(board.board);
-  };
-
-  const fetchTurn = async () => {
-    const turn = await apiClient.turn.$get();
-    setTurn(turn);
+    if (board?.board !== null) setBoard(board?.board);
+    if (board?.currentTurnColor) setTurn(board.currentTurnColor);
   };
 
   const clickCell = async (x: number, y: number) => {
     await apiClient.board.post({ body: { x, y } });
     await fetchBoard();
-    await fetchTurn();
   };
 
   const countCell = (color: number) => {
@@ -36,7 +31,6 @@ const Home = () => {
   useEffect(() => {
     const cancelId = setInterval(() => {
       fetchBoard();
-      fetchTurn();
     }, 100);
     return () => {
       clearInterval(cancelId);

@@ -117,7 +117,13 @@ const setSuggest = () => {
 };
 
 export const boardRepository = {
-  getBoard: () => board,
+  getBoard: (userId: UserId): BoardObj => {
+    return {
+      board,
+      currentTurnColor: turnColor,
+      yourColor: userColorRepository.getUserColor(userId),
+    };
+  },
   clickBoard: (params: Pos, userId: UserId): BoardObj => {
     if (turnColor === userColorRepository.getUserColor(userId) && canPut(params.x, params.y)) {
       returnDisc(params.x, params.y);
@@ -131,6 +137,5 @@ export const boardRepository = {
       yourColor: userColorRepository.getUserColor(userId),
     };
   },
-  turnColor: () => turnColor,
   canPutDisc: () => canPutDisc,
 };
