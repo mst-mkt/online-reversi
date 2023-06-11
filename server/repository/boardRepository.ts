@@ -2,6 +2,12 @@ import type { UserId } from '$/commonTypesWithClient/branded';
 import { userColorRepository } from './userColorRepository';
 
 export type BoardArr = (-1 | 0 | 1 | 2)[][];
+
+export type BoardObj = {
+  board: BoardArr;
+  currentTurnColor: 1 | 2;
+  yourColor: 1 | 2;
+};
 type DirArr = (-1 | 0 | 1)[][];
 
 export type Pos = {
@@ -112,14 +118,18 @@ const setSuggest = () => {
 
 export const boardRepository = {
   getBoard: () => board,
-  clickBoard: (params: Pos, userId: UserId): BoardArr => {
+  clickBoard: (params: Pos, userId: UserId): BoardObj => {
     if (turnColor === userColorRepository.getUserColor(userId) && canPut(params.x, params.y)) {
       returnDisc(params.x, params.y);
       turnColor = (2 / turnColor) as 1 | 2;
       resetCanPutDisc();
       setSuggest();
     }
-    return board;
+    return {
+      board,
+      currentTurnColor: turnColor,
+      yourColor: userColorRepository.getUserColor(userId),
+    };
   },
   turnColor: () => turnColor,
   canPutDisc: () => canPutDisc,

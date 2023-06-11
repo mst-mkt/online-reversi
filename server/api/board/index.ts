@@ -1,4 +1,4 @@
-import type { BoardArr, Pos } from '$/repository/boardRepository';
+import type { BoardArr, BoardObj, Pos } from '$/repository/boardRepository';
 
 export type Methods = {
   get: {
@@ -8,8 +8,6 @@ export type Methods = {
   };
   post: {
     reqBody: Pos;
-    resBody: {
-      board: BoardArr;
-    };
+    resBody: BoardObj;
   };
 };
