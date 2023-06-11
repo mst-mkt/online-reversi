@@ -1,0 +1,54 @@
+.account {
+  display: grid;
+  margin-bottom: min(24px, 6vmin);
+  grid-template-areas:
+    'icon name'
+    'icon email';
+  grid-template-columns: min(16%, 200px) 1fr;
+  grid-template-rows: auto 1fr;
+  row-gap: min(4px, 1vmin);
+  column-gap: min(16px, 4vmin);
+
+  svg {
+    width: min(16%, 200px);
+    height: min(16%, 200px);
+  }
+
+  &__icon {
+    grid-area: icon;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    box-shadow: 0 0 16px #0001;
+  }
+
+  &__name {
+    grid-area: name;
+    font-size: 1.4em;
+    font-weight: bold;
+  }
+
+  &__email {
+    grid-area: email;
+  }
+}
+
+.button {
+  width: 100%;
+  height: min(36px, 9vmin);
+  margin: min(24px, 6vmin) auto 0;
+  border-radius: min(8px, 2vmin);
+  border: 0;
+  background-color: #ddeeff99;
+  font-weight: bold;
+  letter-spacing: 0.1em;
+  transition: background-color 0.2s ease;
+
+  &:hover {
+    background-color: #d0e0f099;
+  }
+
+  &:active {
+    background-color: #c0d7f2aa;
+  }
+}

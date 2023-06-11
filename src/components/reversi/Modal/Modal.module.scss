@@ -1,0 +1,111 @@
+.modal {
+  position: absolute;
+  width: 100vw;
+  height: 100dvh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &__background {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #0001;
+    backdrop-filter: blur(3px);
+  }
+
+  &__inner {
+    background-color: #fff;
+    width: 92vw;
+    max-height: 92dvh;
+    padding: 6vmin;
+    border-radius: 4vmin;
+    box-shadow: 0 0 2vmin #00000001;
+    position: relative;
+  }
+
+  &--enter {
+    > .modal__background {
+      background-color: #0000;
+      backdrop-filter: none;
+    }
+    > .modal__inner {
+      transform: translateY(-30%) scale(0.8);
+      opacity: 0;
+    }
+    &-active {
+      > .modal__background {
+        background-color: #0001;
+        backdrop-filter: blur(3px);
+        transition: {
+          property: background-color backdrop-filter;
+          duration: 300ms;
+          timing-function: ease-in ease-in-out;
+        }
+      }
+      > .modal__inner {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+        transition: {
+          property: transform opacity;
+          duration: 100ms;
+          delay: 50ms;
+          timing-function: ease-out;
+        }
+      }
+    }
+  }
+  &--exit {
+    > .modal__background {
+      background-color: #0001;
+      backdrop-filter: blur(3px);
+    }
+    > .modal__inner {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    &-active {
+      > .modal__background {
+        background-color: #0000;
+        backdrop-filter: none;
+        transition: {
+          property: background-color backdrop-filter;
+          duration: 300ms;
+          timing-function: ease-in ease-in-out;
+        }
+      }
+      > .modal__inner {
+        transform: translateY(30%) scale(0.8);
+        opacity: 0;
+        transition: {
+          property: transform opacity;
+          duration: 100ms;
+          delay: 50ms;
+          timing-function: ease-in;
+        }
+      }
+    }
+  }
+  &__header {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    > h2 {
+      flex-grow: 1;
+      text-align: center;
+      margin: min(12px, 2vmin) 0;
+    }
+    > button {
+      flex-grow: 0;
+    }
+    &:not(:has(> h2)) {
+      position: absolute;
+      top: 6vmin;
+      left: 6vmin;
+      width: calc(100% - 12vmin);
+    }
+  }
+}

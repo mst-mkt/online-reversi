@@ -1,0 +1,28 @@
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0;
+  width: min(48px, 8vmin);
+  height: min(48px, 8vmin);
+  color: #333;
+  flex-grow: 0;
+  background-color: #0000;
+  transition: background-color ease 0.2s;
+  border-radius: min(8px, 1.5vmin);
+  margin-left: min(24px, 4vmin);
+  cursor: pointer;
+
+  &:hover {
+    background-color: #0001;
+  }
+
+  &:active {
+    background-color: #0003;
+  }
+
+  > svg {
+    width: min(24px, 4vmin);
+    height: min(24px, 4vmin);
+  }
+}
