@@ -14,6 +14,8 @@
     height: min(16%, 200px);
   }
 
+  font-size: max(8px, 2vmin);
+
   &__icon {
     grid-area: icon;
     width: 100%;
@@ -43,6 +45,7 @@
   font-weight: bold;
   letter-spacing: 0.1em;
   transition: background-color 0.2s ease;
+  font-size: max(8px, 2vmin);
 
   &:hover {
     background-color: #d0e0f099;
