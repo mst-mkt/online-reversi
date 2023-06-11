@@ -18,7 +18,7 @@
 
   &__inner {
     background-color: #fff;
-    width: 92vw;
+    width: min(92vw, 80dvh);
     max-height: 92dvh;
     padding: 6vmin;
     border-radius: 4vmin;
