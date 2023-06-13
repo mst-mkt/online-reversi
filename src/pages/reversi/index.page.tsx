@@ -19,14 +19,17 @@ const Home = () => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   const fetchBoard = async () => {
-    const board = await apiClient.board.$get().catch(returnNull);
-    if (board?.board !== null) setBoard(board?.board);
-    if (board?.currentTurnColor !== null) setTurnColor(board?.currentTurnColor);
-    if (board?.yourColor !== null) setMyColor(board?.yourColor);
+    const res = await apiClient.rooms.$get().catch(returnNull);
+    if (res === null) {
+      const newRoom = await apiClient.rooms.$post({ body: { x: 0, y: 0 } });
+      setBoard(newRoom.board);
+    } else {
+      setBoard(res.board);
+    }
   };
 
   const clickCell = async (x: number, y: number) => {
-    await apiClient.board.post({ body: { x, y } });
+    await apiClient.rooms.$post({ body: { x, y } });
     await fetchBoard();
   };
 
@@ -78,7 +81,7 @@ const Home = () => {
               <p>{turnColor === myColor ? 'あなた' : '相手'}のターン</p>
             </Status>
             <Status title="COUNT">
-              <div>
+              <div style={{ marginBottom: '4px' }}>
                 <div className={`${styles['count__disc--black']} ${styles.count__disc}`} />
                 <span>{countCell(1)}</span>
               </div>
@@ -90,7 +93,7 @@ const Home = () => {
             <Status title="SCORE">
               <div className={styles.score}>
                 <div className={`${styles.score__disc} ${styles['score__disc--black']}`} />
-                <span className={styles.score__text} />
+                <span className={styles.score__text}>未実装</span>
                 <div className={`${styles.score__disc} ${styles['score__disc--white']}`} />
               </div>
             </Status>

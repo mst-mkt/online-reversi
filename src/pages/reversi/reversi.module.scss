@@ -141,7 +141,7 @@
       display: inline-block;
       width: min(24px, 4vmin);
       height: min(24px, 4vmin);
-      border-radius: 0.8em;
+      border-radius: min(12px, 2vmin);
       vertical-align: middle;
 
       &--black {
