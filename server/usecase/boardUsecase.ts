@@ -6,7 +6,7 @@ export type BoardArr = (-1 | 0 | 1 | 2)[][];
 export type BoardObj = {
   board: BoardArr;
   currentTurnColor: 1 | 2;
-  yourColor: 1 | 2;
+  yourColor: 0 | 1 | 2;
 };
 type DirArr = (-1 | 0 | 1)[][];
 
@@ -117,25 +117,17 @@ const setSuggest = () => {
 };
 
 export const boardUsecase = {
-  getBoard: (userId: UserId): BoardObj => {
-    return {
-      board,
-      currentTurnColor: turnColor,
-      yourColor: userColorUsecase.getUserColor(userId),
-    };
+  getBoard: (): BoardArr => {
+    return board;
   },
-  clickBoard: (params: Pos, userId: UserId): BoardObj => {
-    if (turnColor === userColorUsecase.getUserColor(userId) && canPut(params.x, params.y)) {
-      returnDisc(params.x, params.y);
+  clickBoard: (x: number, y: number, userId: UserId): BoardArr => {
+    if (turnColor === userColorUsecase.getUserColor(userId) && canPut(x, y)) {
+      returnDisc(x, y);
       turnColor = (2 / turnColor) as 1 | 2;
       resetCanPutDisc();
       setSuggest();
     }
-    return {
-      board,
-      currentTurnColor: turnColor,
-      yourColor: userColorUsecase.getUserColor(userId),
-    };
+    return board;
   },
   canPutDisc: () => canPutDisc,
 };

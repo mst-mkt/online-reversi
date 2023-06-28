@@ -1,9 +1,12 @@
-import type { RoomModel } from '$/commonTypesWithClient/models';
 import type { Pos } from '$/usecase/boardUsecase';
+import type { BoardArr } from './../../../usecase/boardUsecase';
 
 export type Methods = {
+  get: {
+    resBody: BoardArr;
+  };
   post: {
     reqBody: Pos;
-    resBody: RoomModel;
+    resBody: BoardArr;
   };
 };

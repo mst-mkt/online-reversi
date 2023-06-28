@@ -6,6 +6,7 @@ import { z } from 'zod';
 
 const toRoomModel = (prismaRoom: Room): RoomModel => ({
   id: roomIdParser.parse(prismaRoom.roomId),
+  name: prismaRoom.roomName,
   board: z.array(z.array(z.number())).parse(prismaRoom.board),
   status: z.enum(['waiting', 'playing', 'ended']).parse(prismaRoom.status),
   created: prismaRoom.createdAt.getTime(),
@@ -18,8 +19,10 @@ export const roomsRepository = {
       update: { status: room.status, board: room.board },
       create: {
         roomId: room.id,
+        roomName: room.name,
         status: room.status,
         board: room.board,
+        currentTurnColor: 1,
         createdAt: new Date(room.created),
       },
     });
@@ -30,5 +33,12 @@ export const roomsRepository = {
     });
 
     return room && toRoomModel(room);
+  },
+  findAll: async (): Promise<RoomModel[]> => {
+    const rooms = await prismaClient.room.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+
+    return rooms.map(toRoomModel);
   },
 };

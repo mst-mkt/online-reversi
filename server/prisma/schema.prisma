@@ -15,18 +15,19 @@ model Task {
 }
 
 model Room {
-  roomId      String       @id
-  board       Json
-  status      String
-  createdAt   DateTime
-  userOnRooms UserOnRoom[]
+  roomId           String       @id
+  roomName         String
+  board            Json
+  status           String
+  createdAt        DateTime
+  userOnRooms      UserOnRoom[]
+  currentTurnColor Int
 }
 
 model UserOnRoom {
   firebaseId String
   in         DateTime
-  out        DateTime?
-  Room       Room      @relation(fields: [roomId], references: [roomId])
+  Room       Room     @relation(fields: [roomId], references: [roomId])
   roomId     String
 
   @@id([firebaseId, roomId])

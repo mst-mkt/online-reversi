@@ -40,4 +40,4 @@ declare const styles:
   & Readonly<{ "score__text": string }>
 ;
 export default styles;
-//# sourceMappingURL=./reversi.module.scss.d.ts.map
+//# sourceMappingURL=./index.module.scss.d.ts.map
