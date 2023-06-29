@@ -19,7 +19,7 @@ const Home = () => {
   // }, []);
 
   if (!roomId) return <Lobby />;
-  return <Game />;
+  return <Game room={roomId} />;
 
   // return (
   //   <>

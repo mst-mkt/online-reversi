@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
+import styles from './index.module.scss';
 export const Lobby = () => {
   const [rooms, setRooms] = useState<RoomModel[]>([]);
   const [labelRoomName, setLabelRoomName] = useState('');
@@ -45,23 +46,34 @@ export const Lobby = () => {
   }, []);
 
   return (
-    <>
-      <form onSubmit={createRoom}>
-        <input
-          value={labelRoomName}
-          type="text"
-          onChange={inputLabel}
-          placeholder="type room name"
-        />
-        <input type="submit" value="create" />
-      </form>
-      <ul>
-        {rooms.map((room) => (
-          <li key={room.id}>
-            <Link href={{ pathname: '/reversi', query: { room: room.id } }}>{room.name}</Link>
-          </li>
-        ))}
-      </ul>
-    </>
+    <main className={styles.lobby}>
+      <section>
+        <h2 className={styles['lobby-caption']}>部屋を作る</h2>
+        <form onSubmit={createRoom} className={styles['create-form']}>
+          <input
+            value={labelRoomName}
+            type="text"
+            onChange={inputLabel}
+            placeholder="type room name"
+          />
+          <button type="submit" value=" " />
+        </form>
+      </section>
+      <section>
+        <h2 className={styles['lobby-caption']}>部屋一覧</h2>
+        <ul className={styles['room-list']}>
+          {rooms.map((room) => (
+            <li key={room.id} className={styles['room-list-item']}>
+              <Link
+                href={{ pathname: '/reversi', query: { room: room.id } }}
+                className={styles['room-link']}
+              >
+                {room.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
   );
 };

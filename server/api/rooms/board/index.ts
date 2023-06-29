@@ -3,6 +3,9 @@ import type { BoardArr } from './../../../usecase/boardUsecase';
 
 export type Methods = {
   get: {
+    query: {
+      roomId: string;
+    };
     resBody: BoardArr;
   };
   post: {

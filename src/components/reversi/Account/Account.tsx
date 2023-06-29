@@ -1,4 +1,5 @@
 import type { UserModel } from '$/commonTypesWithClient/models';
+import Link from 'next/link';
 import { HumanIcon } from 'src/components/icons/HumanIcon';
 import { logout } from 'src/utils/login';
 import styles from './Account.module.scss';
@@ -20,9 +21,9 @@ export const Account = ({ user }: { user: UserModel }) => {
       <button onClick={onLogout} className={styles.button}>
         ログアウト
       </button>
-      <button onClick={() => console.log()} className={styles.button}>
+      <Link href={{ pathname: '/reversi' }} className={styles.button}>
         ゲームをやめる
-      </button>
+      </Link>
     </>
   );
 };
