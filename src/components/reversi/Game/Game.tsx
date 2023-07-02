@@ -1,4 +1,7 @@
+import type { RoomId } from '$/commonTypesWithClient/branded';
+import type { RoomModel, UserOnRoomModel } from '$/commonTypesWithClient/models';
 import { useAtom } from 'jotai';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { userAtom } from 'src/atoms/user';
 import { apiClient } from 'src/utils/apiClient';
@@ -8,9 +11,19 @@ import { Modal } from '../Modal/Modal';
 import { Status } from '../Status/Status';
 import styles from './index.module.scss';
 
-export const Game = ({ roomId }: { roomId: string }) => {
+export const Game = ({ roomId }: { roomId: RoomId }) => {
   const [showModal, setShowModal] = useState<boolean>(false);
-  const [board, setBoard] = useState<number[][]>();
+  const [board, setBoard] = useState<number[][]>([
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, -1, 0, 0, 0],
+    [0, 0, 0, 1, 2, -1, 0, 0],
+    [0, 0, -1, 2, 1, 0, 0, 0],
+    [0, 0, 0, -1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
+  const [room, setRoom] = useState<RoomModel>();
   const [user] = useAtom(userAtom);
   const router = useRouter();
 
@@ -23,18 +36,33 @@ export const Game = ({ roomId }: { roomId: string }) => {
   };
 
   const fetchBoard = async () => {
-    const res = await apiClient.rooms.board.$get({ query: { roomId } });
+    const res = await apiClient.game.$get({ query: { roomId } });
     if (res === null) {
       router.push('/reversi');
     } else {
-      setBoard(res);
+      setBoard(board);
+    }
+  };
+
+  const fetchRoom = async () => {
+    const res = await apiClient.room.$get({ query: { roomId } });
+    if (res === null) {
+      router.push('/reversi');
+      return;
+    } else {
+      setRoom(res);
+      const users: UserOnRoomModel[] = await apiClient.user.$get({ query: { roomId } });
+      if (users.every((u) => u.id !== user?.id)) {
+        await apiClient.game.join.$post({ body: roomId });
+      }
     }
   };
 
   useEffect(() => {
     const cancelId = setInterval(() => {
       fetchBoard();
-    }, 100);
+      fetchRoom();
+    }, 1000);
     return () => {
       clearInterval(cancelId);
     };
@@ -49,11 +77,18 @@ export const Game = ({ roomId }: { roomId: string }) => {
               row.map((cell, x) => <div key={`${y}-${x}`} className={styles.cell} />)
             )}
           </div>
-          {r}
           <Header toggleModal={toggleModal} />
           <div className={styles.status}>
-            <Status title="TURN">
-              <p />
+            <Status title="ROOM NAME">
+              <p
+                style={{
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {room?.name}
+              </p>
             </Status>
             <Status title="COUNT">
               <div style={{ marginBottom: '4px' }}>

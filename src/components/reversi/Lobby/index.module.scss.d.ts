@@ -8,6 +8,10 @@ declare const styles:
   & Readonly<{ "lobby-caption": string }>
   & Readonly<{ "lobby-caption": string }>
   & Readonly<{ "create-form": string }>
+  & Readonly<{ "create-form": string }>
+  & Readonly<{ "create-form": string }>
+  & Readonly<{ "create-form": string }>
+  & Readonly<{ "create-form": string }>
 ;
 export default styles;
 //# sourceMappingURL=./index.module.scss.d.ts.map

@@ -1,13 +1,11 @@
-import { useAtom } from 'jotai';
+import type { RoomId } from '$/commonTypesWithClient/branded';
 import { useRouter } from 'next/router';
 import { Game } from 'src/components/reversi/Game/Game';
 import { Lobby } from 'src/components/reversi/Lobby/Lobby';
-import { userAtom } from '../../atoms/user';
 
 const Home = () => {
-  const [user] = useAtom(userAtom);
   const router = useRouter();
-  const roomId = router.query.room;
+  const roomId = router.query.room as RoomId;
 
   // useEffect(() => {
   //   const cancelId = setInterval(() => {
@@ -19,7 +17,7 @@ const Home = () => {
   // }, []);
 
   if (!roomId) return <Lobby />;
-  return <Game room={roomId} />;
+  return <Game roomId={roomId} />;
 
   // return (
   //   <>

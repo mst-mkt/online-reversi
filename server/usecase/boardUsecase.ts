@@ -117,7 +117,7 @@ const setSuggest = () => {
 };
 
 export const boardUsecase = {
-  getBoard: (): BoardArr => {
+  getBoard: (roomId: string): BoardArr => {
     return board;
   },
   clickBoard: (x: number, y: number, userId: UserId): BoardArr => {

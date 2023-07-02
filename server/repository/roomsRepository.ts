@@ -27,9 +27,9 @@ export const roomsRepository = {
       },
     });
   },
-  findLatest: async (): Promise<RoomModel | null> => {
-    const room = await prismaClient.room.findFirst({
-      orderBy: { createdAt: 'desc' },
+  findUnique: async (roomId: string): Promise<RoomModel | null> => {
+    const room = await prismaClient.room.findUnique({
+      where: { roomId },
     });
 
     return room && toRoomModel(room);
@@ -38,7 +38,6 @@ export const roomsRepository = {
     const rooms = await prismaClient.room.findMany({
       orderBy: { createdAt: 'desc' },
     });
-
     return rooms.map(toRoomModel);
   },
 };

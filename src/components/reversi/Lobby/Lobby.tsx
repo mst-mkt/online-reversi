@@ -11,11 +11,10 @@ export const Lobby = () => {
   const [rooms, setRooms] = useState<RoomModel[]>([]);
   const [labelRoomName, setLabelRoomName] = useState('');
   const router = useRouter();
+
   const fetchRooms = async () => {
-    const res = await apiClient.rooms.$get().catch(returnNull);
-    if (res === null) {
-      setRooms([]);
-    } else {
+    const res = await apiClient.room.list.$get().catch(returnNull);
+    if (res !== null) {
       setRooms(res);
     }
   };
@@ -23,16 +22,16 @@ export const Lobby = () => {
   const inputLabel = (e: ChangeEvent<HTMLInputElement>) => {
     setLabelRoomName(e.target.value);
   };
+
   const createRoom = async (e: FormEvent) => {
     e.preventDefault();
     if (!labelRoomName) return;
-    console.log(labelRoomName);
 
-    await apiClient.rooms.$post({ body: { roomName: labelRoomName } });
+    const room = await apiClient.room.$post({ body: { roomName: labelRoomName } });
 
     router.push({
       pathname: '/reversi',
-      query: { room: labelRoomName },
+      query: { room: room.id },
     });
   };
 

@@ -21,3 +21,9 @@ export type RoomModel = {
   status: 'waiting' | 'playing' | 'ended';
   created: number;
 };
+
+export type UserOnRoomModel = {
+  id: UserId;
+  in: number;
+  roomId: RoomId;
+};

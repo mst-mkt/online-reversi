@@ -1,10 +1,10 @@
-import type { UserId } from '$/commonTypesWithClient/branded';
+import type { RoomId, UserId } from '$/commonTypesWithClient/branded';
 import type { RoomModel } from '$/commonTypesWithClient/models';
 import { roomsRepository } from '$/repository/roomsRepository';
+import { userOnRoomRepository } from '$/repository/userOnRoomRepository';
 import { roomIdParser } from '$/service/idParsers';
 import assert from 'assert';
 import { randomUUID } from 'crypto';
-import { userColorUsecase } from './userColorUsecase';
 
 const initBoard = () => [
   [0, 0, 0, 0, 0, 0, 0, 0],
@@ -31,18 +31,48 @@ export const roomUseCase = {
 
     return newRoom;
   },
-  clickBoard: async (x: number, y: number, userId: UserId): Promise<RoomModel> => {
-    const latest = await roomsRepository.findLatest();
+  join: async (roomId: RoomId, userId: UserId) => {
+    const room = await roomsRepository.findUnique(roomId);
+    assert(room, 'nya-');
 
-    assert(latest, 'にゃー');
+    await userOnRoomRepository.create(userId, roomId);
 
-    const newBoard: number[][] = JSON.parse(JSON.stringify(latest.board));
-    newBoard[y][x] = userColorUsecase.getUserColor(userId);
+    const userCount = (await userOnRoomRepository.findAllInRoom(roomId)).length;
 
-    const newRoom: RoomModel = { ...latest, board: newBoard };
+    if (userCount > 1) {
+      await roomsRepository.save({
+        ...room,
+        status: 'playing',
+      });
+    } else {
+      await roomsRepository.save({
+        ...room,
+        status: 'waiting',
+      });
+    }
 
-    await roomsRepository.save(newRoom);
+    return room;
+  },
+  leave: async (roomId: RoomId, userId: UserId) => {
+    const room = await roomsRepository.findUnique(roomId);
+    assert(room, 'nya-');
 
-    return newRoom;
+    await userOnRoomRepository.delete(userId);
+
+    const userCount = (await userOnRoomRepository.findAllInRoom(roomId)).length;
+
+    if (userCount > 1) {
+      await roomsRepository.save({
+        ...room,
+        status: 'playing',
+      });
+    } else {
+      await roomsRepository.save({
+        ...room,
+        status: 'waiting',
+      });
+    }
+
+    return room;
   },
 };
